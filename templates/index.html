@@ -1,0 +1,93 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Magic Eight Ball</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    </head>
+
+    <body>
+        <h1>Magic Eight Ball</h1>
+
+        <div class="ball">
+            <div class="inner">
+                <!--Front Side of Ball-->
+                <div class="ball-front">
+                    <img src="{{url_for('static', filename='8.png')}}" alt="Magic Eight Ball Front">
+                </div>
+
+            <div class="ball-back">
+                <div class="window">
+                    <span>
+                        {% if answer %}
+                            {{answer}}
+                        {% else %}
+                            Ask me anything!
+                        {% endif %}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div>
+        <form id="questionForm" method="POST" action="/">
+            <input type="text" id="question" name="question" placeholder="Type your question" required>
+            <button type="submit" onClick="shakeAndFlip()">Ask</button>
+        </form>
+    </div>
+
+    <script>
+        function shakeAndFlip(){
+            document.getElementById("questionForm").addEventListener("submit", function(e) {
+                e.preventDefault();
+
+                let input = document.getElementById("question").value.trim();
+
+                if(input == ""){
+                    alert("Please enter a question");
+                    return;
+                }
+
+                let ball = document.querySelector(".inner");
+
+                ball.classList.remove("shake");
+                ball.classList.remove("flipped")
+                void ball.offsetWidth;
+                ball.classList.add("shake");
+                ball.classList.add("flipped");
+
+                setTimeout(() => {
+                    ball.classList.toggle("flipped");
+                }, 1500);
+            });
+        }
+
+        button.addEventListener("click", () => {
+            if(input.value.trim() === "") {
+                ball.classList.remove("flip");
+                ball.classList.add("shake");
+            }
+            else {
+                ball.classList.remove("shake");
+                ball.classList.add("flip");
+            }
+
+            const answers = [
+                "Yes, definately!",
+                "Ask again later.",
+                "No way!",
+                "It is certain.",
+                "Very doubtful.",
+                "Better not tell you now."
+            ]
+
+            const randomIndex=Math.floor(Math.random() * answers.length);
+            output.textContent = answers[randomIndex]
+        })
+    </script>
+
+    
+    </body>
+</html>
