@@ -38,10 +38,13 @@ data = {"grant_type": "client_credentials"}
 #else:
 #    print("Error: ", response.status_code, response.text)
 
-url = "https://api.spotify.com/v1/search"
+url_1 = "https://api.spotify.com/v1/search"
+url_2 = "https://api.spotify.com/v1/search"
 headers = {"Authorization": f"Bearer {ACCESS_TOKEN}"}
-params = {"q":"Jessica Lea Mayfield", "type" : "artist", "limit": 1}
-response_1 = requests.get(url, headers=headers, params=params)
+params_1 = {"q":"Jessica Lea Mayfield", "type" : "artist", "limit": 1}
+params_2 = {"q": "Red Hot Chilli Peppers", "type": "artist", "limit":1}
+response_1 = requests.get(url_1, headers=headers, params=params_1)
+response_2 = requests.get(url_2, headers=headers, params=params_2)
 
 print("URL after requests library configures GET request: ", url); 
 
@@ -58,3 +61,16 @@ if response_1.status_code == 200:
 
 else:
     print("Error: ", response_1.status_code, response_1.text)
+
+if response_2.status_code == 200:
+    data = response_2.json()
+
+    print(json.dumps(data, indent=2))
+    artist = data['artists']['items'][0]
+
+    print("Name: ", artist['name'])
+    print("Popularity: ", artist['popularity'])
+    print("Followers: ", artist['followers']['total'])
+
+else:
+    print("Error: ", response_2.status_code, response_1.text)
