@@ -72,6 +72,7 @@ if response_2.status_code == 200:
     print("Name: ", artist['name'])
     print("Popularity: ", artist['popularity'])
     print("Followers: ", artist['followers']['total'])
+    print("Genres: ", artist['genres'][:])
 
 else:
     print("Error: ", response_2.status_code, response_1.text)
