@@ -10,6 +10,7 @@ load_dotenv()
 
 CLIENT_ID = os.getenv("CLIENT_ID")
 CLIENT_SECRET = os.getenv("CLIENT_SECRET")
+ACCESS_TOKEN = ""
 
 auth_str = f"{CLIENT_ID}:{CLIENT_SECRET}"
 b64_auth_str = base64.b64encode(auth_str.encode()).decode()
