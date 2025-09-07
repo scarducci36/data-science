@@ -12,8 +12,13 @@ CLIENT_ID = os.getenv("CLIENT_ID")
 CLIENT_SECRET = os.getenv("CLIENT_SECRET")
 ACCESS_TOKEN = ""
 
+print("CLIENT_ID LENGTH: ", len(CLIENT_ID))
+print("CLIENT_SECRET lenght: ", len(CLIENT_SECRET))
+
 auth_str = f"{CLIENT_ID}:{CLIENT_SECRET}"
+print("Raw auth string: ", auth_str)
 b64_auth_str = base64.b64encode(auth_str.encode()).decode()
+print("Base64: ", b64_auth_str)
 
 #Example search: URL searching for artist 
 url_token = "https://accounts.spotify.com/api/token"
