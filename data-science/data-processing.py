@@ -11,6 +11,7 @@ load_dotenv(dotenv_path=".env")
 CLIENT_ID = os.getenv("CLIENT_ID")
 CLIENT_SECRET = os.getenv("CLIENT_SECRET")
 ACCESS_TOKEN = ""
+ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
 
 print("CLIENT_ID LENGTH: ", len(CLIENT_ID))
 print("CLIENT_SECRET lenght: ", len(CLIENT_SECRET))
@@ -27,14 +28,14 @@ headers_b64 = {"Authorization": f"Basic {b64_auth_str}",
 
 data = {"grant_type": "client_credentials"}
 
-response = requests.post(url_token,headers=headers_b64, data=data)
+#response = requests.post(url_token,headers=headers_b64, data=data)
 
-if response.status_code == 200:
-    ACCESS_TOKEN = response.json()["access_token"]
-    print("Access Token: ", ACCESS_TOKEN)
+#if response.status_code == 200:
+#    ACCESS_TOKEN = response.json()["access_token"]
+#    print("Access Token: ", ACCESS_TOKEN)
 
-else:
-    print("Error: ", response.status_code, response.text)
+#else:
+#    print("Error: ", response.status_code, response.text)
 
 url = "https://api.spotify.com/v1/search"
 headers = {"Authorization": f"Bearer {ACCESS_TOKEN}"}
@@ -51,6 +52,7 @@ if response_1.status_code == 200:
     print("Name: ", artist['name'])
     print("Popularity: ", artist['popularity'])
     print("Followers: ", artist['followers']['total'])
+    print("Genres: ", artist["genres"])
 
 else:
     print("Error: ", response.status_code, response.text)
