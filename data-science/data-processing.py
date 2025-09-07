@@ -5,9 +5,9 @@ import requests
 import base64
 
 CLIENT_ID = "3a2158dfdfee40bda1b696967040373f"
-CLIENT_SECRET = "0370afc85f9743a68c0185433208ba40"
+CLIENT_SECRET = ""
 
-auth_str = f"{CLIENT_ID}: {CLIENT_SECRET}"
+auth_str = f"{CLIENT_ID}:{CLIENT_SECRET}"
 b64_auth_str = base64.b64encode(auth_str.encode()).decode()
 
 
@@ -16,7 +16,8 @@ ACCESS_TOKEN = ""
 
 #Example search: URL searching for artist 
 url_token = "https://accounts.spotify.com/api/token"
-headers_b64 = {"Authorization": f"Basic {b64_auth_str}"}
+headers_b64 = {"Authorization": f"Basic {b64_auth_str}", 
+               "Content-Type": "application/x-www-form-urlencoded"}
 data = {"grant_type": "client_credentials"}
 
 response = requests.post(url_token,headers=headers_b64, data=data)
