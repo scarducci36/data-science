@@ -8,8 +8,13 @@ __pycache__/
 
 #Ignore virtual environement folders
 venv/
+ENV/
+env/
+env.bak/
 .env/
 .venv/
+
+
 
 #Ignore environment variable
 .env
@@ -30,4 +35,8 @@ venv/
 
 # Ignore compiled C extensions
 *.so
+
+#IDE / Editor stuff
+.vscode/
+.idea/
 
