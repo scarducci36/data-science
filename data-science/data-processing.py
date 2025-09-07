@@ -46,7 +46,8 @@ params_2 = {"q": "Red Hot Chilli Peppers", "type": "artist", "limit":1}
 response_1 = requests.get(url_1, headers=headers, params=params_1)
 response_2 = requests.get(url_2, headers=headers, params=params_2)
 
-print("URL after requests library configures GET request: ", url); 
+print("URL1 after requests library configures GET request: ", url_1); 
+print("URL2 after requests library configures GET request: ", url_2); 
 
 
 if response_1.status_code == 200:
