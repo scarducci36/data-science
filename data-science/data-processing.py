@@ -55,4 +55,4 @@ if response_1.status_code == 200:
     print("Genres: ", artist["genres"])
 
 else:
-    print("Error: ", response_1.status_code, response.text)
+    print("Error: ", response_1.status_code, response_1.text)
