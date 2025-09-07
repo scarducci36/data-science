@@ -1,0 +1,33 @@
+# Created by venv; see https://docs.python.org/3/library/venv.html
+#Ignore Python bytcode and cache 
+__pycache__/
+*.py[cod]
+*.python
+*.pyd
+*.pkl
+
+#Ignore virtual environement folders
+venv/
+.env/
+.venv/
+
+#Ignore environment variable
+.env
+
+#Ignore Jupyter Notebook checkpoints
+./ipynb_checkpoints/
+
+# Ignore macOS system files
+.DS_Store
+
+# Ignore VS Code settings
+.vscode/
+
+# Ignore logs and temporary files
+*.log
+*.tmp
+*.swp
+
+# Ignore compiled C extensions
+*.so
+
