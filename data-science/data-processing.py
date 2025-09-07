@@ -5,6 +5,7 @@ import requests
 import base64
 import os 
 from dotenv import load_dotenv
+import json
 
 load_dotenv(dotenv_path=".env")
 
@@ -47,12 +48,13 @@ print("URL after requests library configures GET request: ", url);
 
 if response_1.status_code == 200:
     data = response_1.json()
+
+    print(json.dumps(data, indent=2))
     artist = data['artists']['items'][0]
 
     print("Name: ", artist['name'])
     print("Popularity: ", artist['popularity'])
     print("Followers: ", artist['followers']['total'])
-    print("Genres: ", artist["genres"][0])
 
 else:
     print("Error: ", response_1.status_code, response_1.text)
