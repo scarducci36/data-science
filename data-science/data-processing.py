@@ -57,6 +57,7 @@ if response_1.status_code == 200:
     artist = data['artists']['items'][0]
 
     print("Name: ", artist['name'])
+    print("ID: ", artist["id"])
     print("Popularity: ", artist['popularity'])
     print("Followers: ", artist['followers']['total'])
 
@@ -70,6 +71,7 @@ if response_2.status_code == 200:
     artist = data['artists']['items'][0]
 
     print("Name: ", artist['name'])
+    print("ID: ", artist["id"])
     print("Popularity: ", artist['popularity'])
     print("Followers: ", artist['followers']['total'])
     print("Genres: ", artist['genres'][:])
