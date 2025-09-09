@@ -14,6 +14,8 @@ def refresh_token(url, headers, data):
 def search_request(url, headers, params):
     return requests.get(url, headers=headers, params=params); 
 
+#Ask User to type in Search Term 
+search_term = input("Enter Search Term...")
 
 load_dotenv(dotenv_path=".env")
 
@@ -34,21 +36,23 @@ data = {"grant_type": "client_credentials"}
 url_1 = "https://api.spotify.com/v1/search"
 url_2 = "https://api.spotify.com/v1/search"
 headers = {"Authorization": f"Bearer {ACCESS_TOKEN}"}
-params_1 = {"q":"Jessica Lea Mayfield", "type" : "artist", "limit": 1}
+params_1 = {"q":search_term, "type" : "artist", "limit": 5}
 params_2 = {"q": "Red Hot Chilli Peppers", "type": "artist", "limit":1}
 response_1 = search_request(url_1, headers, params_1)
 response_2 = search_request(url_2, headers, params_2)
 
 if response_1.status_code == 200:
+
     data = response_1.json()
 
-    print(json.dumps(data, indent=2))
-    artist = data['artists']['items'][0]
+    #print(json.dumps(data, indent=2))
+    artists = data['artists']['items'][0]
 
-    print("Name: ", artist['name'])
-    print("ID: ", artist["id"])
-    print("Popularity: ", artist['popularity'])
-    print("Followers: ", artist['followers']['total'])
+    for artist in artists:
+        print("Name: ", artist['name'])
+        print("ID: ", artist["id"])
+        print("Popularity: ", artist['popularity'])
+        print("Followers: ", artist['followers']['total'])
 
 else:
     print("Error: Attempting to Refresh Access Token...", response_1.status_code, response_1.text)
