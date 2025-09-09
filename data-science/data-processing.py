@@ -9,7 +9,7 @@ import json
 
 
 def refresh_token(url, headers, data):
-    return requests.post(url, headers=headers, dat=data)
+    return requests.post(url, headers=headers, data=data)
 
 def search_request(url, headers, params):
     return requests.get(url, headers=headers, params=params); 
