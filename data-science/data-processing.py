@@ -49,10 +49,12 @@ if response_1.status_code == 200:
     artists = data['artists']['items']
     num = 5
     for i in range(num):
+        print("Artist ", i+1)
         print("Name: ", artists[i]["name"])
         print("ID: ", artists[i]["id"])
         print("Popularity: ", artists[i]['popularity'])
         print("Followers: ", artists[i]['followers']['total'])
+        print("\n")
 
 else:
     print("Error: Attempting to Refresh Access Token...", response_1.status_code, response_1.text)
