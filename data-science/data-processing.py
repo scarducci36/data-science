@@ -60,6 +60,7 @@ else:
     if response.status_code == 200:
         ACCESS_TOKEN = response.json()["access_token"]
         print("Access Token: ", ACCESS_TOKEN)
+        headers = {"Authorization": f"Bearer {ACCESS_TOKEN}"}
         response_1 = search_request(url_1, headers, params_1)
 
     else:
