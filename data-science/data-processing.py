@@ -45,7 +45,7 @@ if response_1.status_code == 200:
 
     data = response_1.json()
 
-    print(json.dumps(data, indent=2))
+    #print(json.dumps(data, indent=2))
     artists = data['artists']['items']
     num = 5
     for i in range(num):
