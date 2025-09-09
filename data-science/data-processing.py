@@ -29,14 +29,14 @@ headers_b64 = {"Authorization": f"Basic {b64_auth_str}",
 
 data = {"grant_type": "client_credentials"}
 
-#response = requests.post(url_token,headers=headers_b64, data=data)
+response = requests.post(url_token,headers=headers_b64, data=data)
 
-#if response.status_code == 200:
-#    ACCESS_TOKEN = response.json()["access_token"]
-#    print("Access Token: ", ACCESS_TOKEN)
+if response.status_code == 200:
+    ACCESS_TOKEN = response.json()["access_token"]
+    print("Access Token: ", ACCESS_TOKEN)
 
-#else:
-#    print("Error: ", response.status_code, response.text)
+else:
+    print("Error: ", response.status_code, response.text)
 
 url_1 = "https://api.spotify.com/v1/search"
 url_2 = "https://api.spotify.com/v1/search"
