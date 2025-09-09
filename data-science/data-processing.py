@@ -46,12 +46,13 @@ if response_1.status_code == 200:
     data = response_1.json()
 
     print(json.dumps(data, indent=2))
-    artists = data['artists']['items'][0]
+    artists = data['artists']['items']
 
-    print("Name: ", artists['name'])
-    print("ID: ", artists["id"])
-    print("Popularity: ", artists['popularity'])
-    print("Followers: ", artists['followers']['total'])
+    for i in artists:
+        print("Name: ", artists['name'][i])
+        print("ID: ", artists["id"][i])
+        print("Popularity: ", artists['popularity'][i])
+        print("Followers: ", artists['followers']['total'][i])
 
 else:
     print("Error: Attempting to Refresh Access Token...", response_1.status_code, response_1.text)
