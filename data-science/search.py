@@ -43,7 +43,7 @@ def get_searches():
     connection.close()
 
     results = [dict(row) for row in rows]
-    print(json.dump(results, indent=2))
+    print(json.dumps(results, indent=2))
     return results
 
 #Creating app instance with Flask and locating correct file
