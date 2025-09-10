@@ -126,4 +126,6 @@ else:
     else:
         print("Error: ", response.status_code, response.text)
 
+if __name__ == '__search__':
+        app.run(debug=True)
 

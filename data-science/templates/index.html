@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <Title>Search for Underground Artists</Title>
+        <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css')}}">
+    </head>
+
+    <body>
+        <h1>Search for Underground Artists</h1>
+        <form action="/search" method="get">
+            <input type="search" id="site-search" name="q" placeholder="Search...">
+            <button type="submit">Search</button>
+        </form>
+    </body>
+</html>
