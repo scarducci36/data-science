@@ -40,7 +40,10 @@ def get_searches():
     c.execute("SELECT * FROM searches")
     rows = c.fetchall()
     connection.close()
-    return jsonify(rows)
+
+    results = [dict(row) for row in rows]
+    print(json.dump(results, indent=2))
+    return results
 
 #Creating app instance with Flask and locating correct file
 app = Flask(__name__)
