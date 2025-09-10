@@ -55,7 +55,7 @@ def init_db():
     #Create table and define columns 
     c.execute('''CREATE TABLE IF NOT EXISTS searches 
               (id INTEGER PRIMARY KEY AUTOINCREMENT, 
-              spotify_id TEXT
+              spotify_id TEXT,
               artist_name TEXT, 
               genres TEXT, 
               followers INT, 
