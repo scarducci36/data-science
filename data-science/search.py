@@ -29,7 +29,6 @@ def save_search(artist):
 
     connection = sqlite3.connect("spotify_searches.db")
     c = connection.cursor()
-    c.execute("DROP TABLE IF EXISTS searches")
     c.execute("INSERT INTO searches (artist_name, genres, followers, popularity, spotify_id, search_time) VALUES (?, ?, ?, ?, ?, ?)", 
               (artist_name, genres, followers, popularity, spotify_id, search_time))
     connection.commit()
@@ -52,6 +51,7 @@ def init_db():
     connection = sqlite3.connect("spotify_searches.db")
     #Creates cursor object to execute SQL commands
     c = connection.cursor()
+    c.execute("DROP TABLE IF EXISTS searches")
     #Create table and define columns 
     c.execute('''CREATE TABLE IF NOT EXISTS searches 
               (id INTEGER PRIMARY KEY AUTOINCREMENT, 
