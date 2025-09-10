@@ -24,13 +24,13 @@ def save_search(artist):
     genres = ", ".join(artist["genres"])
     followers = artist["followers"]["total"]
     popularity = artist["popularity"]
-    id = artist["id"]
-    search_time = time.time
+    spotify_id = artist["id"]
+    search_time = time.time()
 
     connection = sqlite3.connect("spotify_searches.db")
     c = connection.cursor()
-    c.execute("INSERT INTO searches (artist_name, genres, followers, popularity, id, search_time) VALUES (?, ?, ?, ?, ?, ?)", 
-              (artist_name, genres, followers, popularity, id, search_time))
+    c.execute("INSERT INTO searches (artist_name, genres, followers, popularity, spotify_id, search_time) VALUES (?, ?, ?, ?, ?, ?)", 
+              (artist_name, genres, followers, popularity, spotify_id, search_time))
     connection.commit()
     connection.close()
     return jsonify({"status": "success", "artist": artist_name})
@@ -54,6 +54,7 @@ def init_db():
     #Create table and define columns 
     c.execute('''CREATE TABLE IF NOT EXISTS searches 
               (id INTEGER PRIMARY KEY AUTOINCREMENT, 
+              spotify_id TEXT
               artist_name TEXT, 
               genres TEXT, 
               followers INT, 
