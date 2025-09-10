@@ -96,7 +96,7 @@ if response.status_code == 200:
     artists = data['artists']['items']
     num = 5
     for i in range(num):
-        save_search(data['artists'][i])
+        save_search(data['artists'])
         print("Artist ", i+1)
         print("Name: ", artists[i]["name"])
         print("ID: ", artists[i]["id"])
