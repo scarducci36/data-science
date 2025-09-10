@@ -67,7 +67,7 @@ def init_db():
     c.execute("SELECT * FROM searches")
     rows = c.fetchall()
     connection.close()
-    print(jsonify(rows))
+    print(json.dumps(rows, indent=2))
     connection.close()
 
 #Ask User to type in Search Term (This should be converted into a text input connected to html and css)

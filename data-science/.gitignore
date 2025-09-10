@@ -40,3 +40,6 @@ env.bak/
 .vscode/
 .idea/
 
+#DB
+*.db
+
