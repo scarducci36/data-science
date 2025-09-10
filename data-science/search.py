@@ -18,12 +18,12 @@ def refresh_token(url, headers, data):
 def search_request(url, headers, params):
     return requests.get(url, headers=headers, params=params); 
 
-def save_search(artist):
-    artist_name = artist['name']
-    genres = artist["genres"]
-    followers = artist["followers"]
-    popularity = artist["popularity"]
-    id = artist["id"]
+def save_search(data):
+    artist_name = data["artists"]['name']
+    genres = data["artists"]["genres"]
+    followers = data["artists"]["followers"]
+    popularity = data["artists"]["popularity"]
+    id = data["artists"]["id"]
     search_time = time.time
 
     connection = sqlite3.connect("spotify_searches.db")
@@ -96,7 +96,7 @@ if response.status_code == 200:
     artists = data['artists']['items']
     num = 5
     for i in range(num):
-        save_search(data['artists'])
+        save_search(data)
         print("Artist ", i+1)
         print("Name: ", artists[i]["name"])
         print("ID: ", artists[i]["id"])
