@@ -36,6 +36,7 @@ def save_search(artist):
 
 def get_searches():
     connection = sqlite3.connect("spotify_searches.db")
+    connection.row_factory = sqlite3.Row
     c = connection.cursor()
     c.execute("SELECT * FROM searches")
     rows = c.fetchall()
@@ -53,7 +54,6 @@ def init_db():
     connection = sqlite3.connect("spotify_searches.db")
     #Creates cursor object to execute SQL commands
     c = connection.cursor()
-    c.execute("DROP TABLE IF EXISTS searches")
     #Create table and define columns 
     c.execute('''CREATE TABLE IF NOT EXISTS searches 
               (id INTEGER PRIMARY KEY AUTOINCREMENT, 
