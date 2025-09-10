@@ -57,8 +57,7 @@ def init_db():
               artist_name TEXT, 
               genres TEXT[]*, 
               followers INT, 
-              popularity INT,  
-              artist_id TEXT, 
+              popularity INT,   
               search_time REAL )''')
     
     connection.commit()
@@ -96,6 +95,7 @@ if response.status_code == 200:
     #print(json.dumps(data, indent=2))
     artists = data['artists']['items']
     num = 5
+    init_db()
     for i, artist in enumerate(artists[:5]):
         save_search(artist)
         print("Artist ", i+1)
