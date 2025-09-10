@@ -21,7 +21,7 @@ def search_request(url, headers, params):
 def save_search(artist):
     #artist = data["artists"]["items"][result_num]
     artist_name = artist['name']
-    genres = artist["genres"]
+    genres = ", ".join(artist["genres"])
     followers = artist["followers"]
     popularity = artist["popularity"]
     id = artist["id"]
@@ -55,7 +55,7 @@ def init_db():
     c.execute('''CREATE TABLE IF NOT EXISTS searches 
               (id INTEGER PRIMARY KEY AUTOINCREMENT, 
               artist_name TEXT, 
-              genres TEXT[]*, 
+              genres TEXT, 
               followers INT, 
               popularity INT,   
               search_time REAL )''')
