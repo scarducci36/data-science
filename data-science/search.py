@@ -22,7 +22,7 @@ def save_search(artist):
     #artist = data["artists"]["items"][result_num]
     artist_name = artist['name']
     genres = ", ".join(artist["genres"])
-    followers = artist["followers"]
+    followers = artist["followers"]["total"]
     popularity = artist["popularity"]
     id = artist["id"]
     search_time = time.time
