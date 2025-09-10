@@ -52,7 +52,7 @@ def init_db():
     #Creates cursor object to execute SQL commands
     c = connection.cursor()
     #Create table and define columns 
-    c.execute('''CREATE TABLE IF DOES NOT EXIST searches 
+    c.execute('''CREATE TABLE IF NOT EXIST searches 
               (id INTEGER PRIMARY KEY AUTOINCREMENT, 
               artist_name TEXT, 
               genres TEXT[]*, 
