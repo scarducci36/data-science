@@ -56,8 +56,7 @@ def init_db():
               artist_name TEXT, 
               genres TEXT[]*, 
               followers INT, 
-              popularity INT, 
-              last-updated TIMESTAMP, 
+              popularity INT,  
               artist_id TEXT, 
               search_time REAL )''')
     
@@ -97,7 +96,7 @@ if response.status_code == 200:
     artists = data['artists']['items']
     num = 5
     for i in range(num):
-        save_search(artists[i])
+        save_search(data['artists'][i])
         print("Artist ", i+1)
         print("Name: ", artists[i]["name"])
         print("ID: ", artists[i]["id"])
