@@ -29,6 +29,7 @@ def save_search(artist):
 
     connection = sqlite3.connect("spotify_searches.db")
     c = connection.cursor()
+    c.execute("DROP TABLE IF EXISTS searches")
     c.execute("INSERT INTO searches (artist_name, genres, followers, popularity, spotify_id, search_time) VALUES (?, ?, ?, ?, ?, ?)", 
               (artist_name, genres, followers, popularity, spotify_id, search_time))
     connection.commit()
