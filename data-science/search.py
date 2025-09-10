@@ -6,8 +6,7 @@ import base64
 import os 
 from dotenv import load_dotenv
 import json
-from flask import Flask
-import jsonify 
+from flask import Flask, request, jsonify 
 import sqlite3
 import time
 
@@ -33,7 +32,7 @@ def save_search(artist):
               (artist_name, genres, followers, popularity, spotify_id, search_time))
     connection.commit()
     connection.close()
-    return jsonify({"status": "success", "artist": artist_name})
+    return {"status": "success", "artist": artist_name}
 
 def get_searches():
     connection = sqlite3.connect("spotify_searches.db")
