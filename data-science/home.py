@@ -106,7 +106,7 @@ def init_db():
               last_updated TIMESTAMP 
               ) ''')                                        # ^ Artist Table - Primary Key => id
     
-    c.execute(''' CREATE TABLE IF NOT EXIST albums (
+    c.execute(''' CREATE TABLE IF NOT EXISTS albums (
               id INTEGER PRIMARY KEY AUTOINCREMENT,
               spotify_id TEXT, 
               album_name TEXT, 
