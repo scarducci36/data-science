@@ -29,6 +29,7 @@ def save_search(data):
     search_time = time.time()
     connection = sqlite3.connect("spotify_searches.db")
     c = connection.cursor()
+    i = 1
     if "artists" in data:
         for artist in data['artists']['items']:
             spotify_id = artist['id']
@@ -41,17 +42,19 @@ def save_search(data):
             else: 
                 c.execute("INSERT INTO searches (artist_name, genres, followers, popularity, spotify_id, search_time) VALUES (?, ?, ?, ?, ?, ?)", 
                         (artist['name'], artist['genres'], artist['followers']['total'], artist['popularity'], artist['spotify_id'], search_time))
-                print("Artist ", i+1)
-                print("Name: ", data["artists"][artist]["name"])
-                print("ID: ", data["artists"][artist]["id"])
-                print("Popularity: ", data["artists"][artist]['popularity'])
-                print("Followers: ", data["artists"][artist]['followers']['total'])
+                print("Artist ", i)
+                i = i + 1
+                print("Name: ", artist["name"])
+                print("ID: ", artist["id"])
+                print("Popularity: ", artist['popularity'])
+                print("Followers: ", artist['followers']['total'])
                 print("\n")
 
                 connection.commit()
                 connection.close()
                 return {"status": "success", "artist": artist['name']}
     elif "albums" in data: 
+            j = 1
             for album in data['albums']['items']:
                 spotify_id = album['id']
                 c.execute('''SELECT id FROM searches WHERE SPOTIFY_IS = ?''', (spotify_id, ))
@@ -65,6 +68,12 @@ def save_search(data):
                     c.execute("INSERT INTO albums (spotify_id, album_name, popularity, image_url, genres, last_updated) VALUES (?, ?, ?, ?, ?, ?)", 
                             (album['name'], album['id'], album['popularity'], album['images']['url'], album['genres'], search_time))
                     c.execute("")
+                    print("Album ", j)
+                    j = j+1
+                    print("Album Name: ", album['name'])
+                    print("Album Popularity: ", album['popularity'])
+                    print("Genres: ", album['genres'])
+                    print("\n")
 
                     connection.commit()
                     connection.close()
@@ -218,15 +227,16 @@ data = {"grant_type": "client_credentials"}
 test_auth_url = "https://api.spotify.com/v1/search"             # Build Test Authorization HTTP Request
 test = "0"
 headers = {"Authorization": f"Bearer {ACCESS_TOKEN}"}
-params = {"q":test, "type" : "artist", "limit": 1}
+params = {"q":test, "type" : "artist", "limit": 1}              #This should be partly user input
 response = search_request(test_auth_url, headers, params)
 
 if response.status_code == 200:
 
-    data = response.json()
-
+    data = response.json()                 #No need to save this because it is just a test for authorization
     #print(json.dumps(data, indent=2))
     print("Authorization Successful.")
+
+    #Prompt user for search here?
 else:
     print("Access Denied: Attempting to Refresh Access Token...", response.status_code, response.text)
     response = refresh_token(token_req_url, headers_b64, data)
@@ -259,5 +269,5 @@ def search():
 
     return render_template('search_results.html', query=query, results=results)
 
-if __name__ == '__home__':
+if __name__ == '__main__':
     app.run(debug=True)
