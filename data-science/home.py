@@ -168,7 +168,7 @@ def query_db(text):
              JOIN artists ON albums.artist_spotify_id = artists.spotify_id 
              WHERE lower(artists.artist_name) LIKE ? 
              OR lower(artists.genres) LIKE ?
-             OR lower(artists.album_name) LIKE ?'''
+             OR lower(albums.album_name) LIKE ?'''
     
     search_term = f"%{text.lower()}%"
     c.execute(SQL, (search_term, search_term, search_term))
