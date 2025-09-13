@@ -178,6 +178,7 @@ def query_db(text):
         connection.close()
         return rows
     else:
+        ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
         #Set up HTTP call requirements
         #Building String to Build HTTP Request Queries 
         url_artist = "https://api.spotify.com/v1/search"
