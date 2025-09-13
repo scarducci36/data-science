@@ -31,7 +31,7 @@ form input[type="submit"] {
     border: 1px solid #ccc;
 }
 
-form button:hover {
+form button {
     background-color: lightpink; /* Blue background */
     color: white; /* White text */
     padding: 10px 20px; /* Padding inside the button */

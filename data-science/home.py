@@ -163,15 +163,15 @@ def query_db(text):
     connection.row_factory = sqlite3.Row
     c = connection.cursor()
 
-    SQL = '''SELECT artists.artist_name, artists.genres, albums.artist_name
+    SQL = '''SELECT artists.artist_name, artists.genres, albums.album_name
              FROM albums
              JOIN artists ON albums.artist_spotify_id = artists.spotify_id 
              WHERE lower(artists.artist_name) LIKE ? 
              OR lower(artists.genres) LIKE ?
-             OR lower(artists.track_name) LIKE ?'''
+             OR lower(artists.album_name) LIKE ?'''
     
-    pattern = f"%{text.lower()}%"
-    c.execute(SQL, pattern, pattern, pattern)
+    search_term = f"%{text.lower()}%"
+    c.execute(SQL, (search_term, search_term, search_term))
     rows = c.fetchall()
 
     if rows: 
@@ -266,6 +266,7 @@ def search():
 
     if query: 
         results = query_db(query)
+
 
     return render_template('search_results.html', query=query, results=results)
 
