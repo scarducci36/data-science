@@ -10,30 +10,34 @@ from flask import Flask, request, jsonify
 import sqlite3
 import time
 
-#Function Definitions
+# Function Definitions
+
+# Function Description: Takes in URL, header info for HTTP request, and data required for response. 
+# Returns either authorization confirmation or new token. 
 def refresh_token(url, headers, data):
     return requests.post(url, headers=headers, data=data)
 
+# Function Description: Takes URL, header info for HTTP request, and parameter. 
+# Returns search results.
 def search_request(url, headers, params):
     return requests.get(url, headers=headers, params=params); 
 
-def save_search(artist):
-    #artist = data["artists"]["items"][result_num]
-    artist_name = artist['name']
-    genres = ", ".join(artist["genres"])
-    followers = artist["followers"]["total"]
-    popularity = artist["popularity"]
-    spotify_id = artist["id"]
+#Function Description: Takes in the data from the JSON formatted result provided by the HTTP search request 
+# and saves the information into the backend of the DB 
+def save_search(data):
     search_time = time.time()
 
     connection = sqlite3.connect("spotify_searches.db")
     c = connection.cursor()
-    c.execute("INSERT INTO searches (artist_name, genres, followers, popularity, spotify_id, search_time) VALUES (?, ?, ?, ?, ?, ?)", 
-              (artist_name, genres, followers, popularity, spotify_id, search_time))
+    for artist in data['artists']['items']:
+        c.execute("INSERT INTO searches (artist_name, genres, followers, popularity, spotify_id, search_time) VALUES (?, ?, ?, ?, ?, ?)", 
+                (artist['name'], artist['genres'], artist['followers'], artist['popularity'], artist['spotify_id'], search_time))
     connection.commit()
     connection.close()
-    return {"status": "success", "artist": artist_name}
+    return {"status": "success", "artist": artist['name']}
 
+# Function Definition: Function takes in no arguments (getter), prints the results of the searches table
+# and returns the results object
 def get_searches():
     connection = sqlite3.connect("spotify_searches.db")
     connection.row_factory = sqlite3.Row
@@ -48,7 +52,7 @@ def get_searches():
 
 #Creating app instance with Flask and locating correct file
 app = Flask(__name__)
-@app.route('/')
+@app.route('/search')
 def init_db():
     #Connects to or if does not exist creates file based DB
     connection = sqlite3.connect("spotify_searches.db")
@@ -73,7 +77,7 @@ def init_db():
     connection.close()
 
 #Ask User to type in Search Term (This should be converted into a text input connected to html and css)
-search_term = input("Enter Search Term...")
+#search_term = input("Enter Search Term...")
 
 load_dotenv(dotenv_path=".env")
 
@@ -90,6 +94,8 @@ headers_b64 = {"Authorization": f"Basic {b64_auth_str}",
 token_req_url = "https://accounts.spotify.com/api/token"
 data = {"grant_type": "client_credentials"}
 
+search_term = "Sarah"
+
 #Building String to Build HTTP Request Queries 
 url_1 = "https://api.spotify.com/v1/search"
 url_2 = "https://api.spotify.com/v1/search"
@@ -105,8 +111,8 @@ if response.status_code == 200:
     artists = data['artists']['items']
     num = 5
     init_db()
+    save_search(data)
     for i, artist in enumerate(artists[:5]):
-        save_search(artist)
         print("Artist ", i+1)
         print("Name: ", artists[i]["name"])
         print("ID: ", artists[i]["id"])
