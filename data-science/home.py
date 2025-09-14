@@ -30,71 +30,71 @@ def save_search(data):
     connection = sqlite3.connect("spotify_searches.db")
     c = connection.cursor()
     i = 1
-    if "artists" in data:
-        for artist in data['artists']['items']:
-            spotify_id = artist['id']
-            c.execute('''SELECT id FROM artists WHERE spotify_id = ?''', (spotify_id, ))
-            existing = c.fetchone()
-
-            if existing: 
-                print(f"Artist '{artist['name']}' already exists, skipping insert into DB")
-                print("Artist ", i)
-                i = i + 1
-                print("Name: ", artist["name"])
-                print("ID: ", artist["id"])
-                print("Popularity: ", artist['popularity'])
-                print("Followers: ", artist['followers']['total'])
-                print("\n")
-
-            else: 
-                c.execute("INSERT INTO artists (artist_name, genres, followers, popularity, spotify_id, image_url, last_updated) VALUES (?, ?, ?, ?, ?, ?, ?)", 
-                        (artist['name'], ", ".join(artist['genres']), artist['followers']['total'], artist['popularity'], artist['id'], artist['images'][0]['url'], search_time))
-                print("Artist ", i)
-                i = i + 1
-                print("Name: ", artist["name"])
-                print("ID: ", artist["id"])
-                print("Popularity: ", artist['popularity'])
-                print("Followers: ", artist['followers']['total'])
-                print("\n")
-
-        connection.commit()
-        connection.close()
-        return {"status": "success", "artist": artist['name']}
-    elif "albums" in data: 
-            j = 1
-            for album in data['albums']['items']:
-                spotify_id = album['id']
-                c.execute('''SELECT id FROM searches WHERE SPOTIFY_IS = ?''', (spotify_id, ))
+    results = []
+    try: 
+        if "artists" in data:
+            for artist in data['artists']['items']:
+                spotify_id = artist['id']
+                c.execute('''SELECT id FROM artists WHERE spotify_id = ?''', (spotify_id, ))
                 existing = c.fetchone()
 
                 if existing: 
-                    print(f"Album '{album['name']}' already exists, skipping insert into DB")
-                    print("Album ", j)
-                    j = j+1
-                    print("Album Name: ", album['name'])
-                    print("Album Popularity: ", album['popularity'])
-                    print("Genres: ", album['genres'])
+                    print(f"Artist '{artist['name']}' already exists, skipping insert into DB")
+                    print("Artist ", i)
+                    i = i + 1
+                    print("Name: ", artist["name"])
+                    print("ID: ", artist["id"])
+                    print("Popularity: ", artist['popularity'])
+                    print("Followers: ", artist['followers']['total'])
                     print("\n")
+
                 else: 
-
-                    c.execute("INSERT INTO albums (spotify_id, album_name, popularity, image_url, genres, artist_spotify_id, last_updated) VALUES (?, ?, ?, ?, ?, ?)", 
-                            (album['name'], album['id'], album['popularity'], album['images'][0]['url'], album['genres'], album['artists'][0]['id'], search_time))
-                    
-                    c.execute("")
-                    print("Album ", j)
-                    j = j+1
-                    print("Album Name: ", album['name'])
-                    print("Album Popularity: ", album['popularity'])
-                    print("Genres: ", album['genres'])
+                    c.execute("INSERT INTO artists (artist_name, genres, followers, popularity, spotify_id, image_url, last_updated) VALUES (?, ?, ?, ?, ?, ?, ?)", 
+                            (artist['name'], ", ".join(artist['genres']), artist['followers']['total'], artist['popularity'], artist['id'], artist['images'][0]['url'] if artist.get('images') and len(artist['images']) > 0 else None, search_time))
+                    print("Artist ", i)
+                    i = i + 1
+                    print("Name: ", artist["name"])
+                    print("ID: ", artist["id"])
+                    print("Popularity: ", artist['popularity'])
+                    print("Followers: ", artist['followers']['total'])
                     print("\n")
 
-            connection.commit()
-            connection.close()
-            return {"status": "success", "album": album['name']}
-        
-    connection.commit()
-    connection.close()
-    return {"status": "success", "artist": artist['name']}
+            print({"status": "success", "artist": artist['name']})
+            results.append({"status": "success", "artist": artist['name']})
+        elif "albums" in data: 
+                j = 1
+                for album in data['albums']['items']:
+                    spotify_id = album['id']
+                    c.execute('''SELECT id FROM searches WHERE SPOTIFY_IS = ?''', (spotify_id, ))
+                    existing = c.fetchone()
+
+                    if existing: 
+                        print(f"Album '{album['name']}' already exists, skipping insert into DB")
+                        print("Album ", j)
+                        j = j+1
+                        print("Album Name: ", album['name'])
+                        print("Album Popularity: ", album['popularity'])
+                        print("Genres: ", album['genres'])
+                        print("\n")
+                    else: 
+
+                        c.execute("INSERT INTO albums (spotify_id, album_name, popularity, image_url, genres, artist_spotify_id, last_updated) VALUES (?, ?, ?, ?, ?, ?)", 
+                                (album['name'], album['id'], album['popularity'], album['images'][0]['url'] if artist.get('images') and len(artist['images']) > 0 else None, album['genres'], album['artists'][0]['id'], search_time))
+                        
+                        c.execute("")
+                        print("Album ", j)
+                        j = j+1
+                        print("Album Name: ", album['name'])
+                        print("Album Popularity: ", album['popularity'])
+                        print("Genres: ", album['genres'])
+                        print("\n")
+
+                    print({"status": "success", "artist": artist['name']})
+                    results.append({"status": "success", "album": album['name']})
+        connection.commit()
+        return results
+    finally:     
+        connection.close()
 
 # Function Definition: Function takes in no arguments (getter), prints the results of the searches table
 # and returns the results object
