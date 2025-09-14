@@ -50,9 +50,9 @@ def save_search(data):
                 print("Followers: ", artist['followers']['total'])
                 print("\n")
 
-                connection.commit()
-                connection.close()
-                return {"status": "success", "artist": artist['name']}
+            connection.commit()
+            connection.close()
+            return {"status": "success", "artist": artist['name']}
     elif "albums" in data: 
             j = 1
             for album in data['albums']['items']:
@@ -76,9 +76,9 @@ def save_search(data):
                     print("Genres: ", album['genres'])
                     print("\n")
 
-                    connection.commit()
-                    connection.close()
-                    return {"status": "success", "album": album['name']}
+                connection.commit()
+                connection.close()
+                return {"status": "success", "album": album['name']}
         
     connection.commit()
     connection.close()
@@ -178,7 +178,7 @@ def query_db(text):
 
     if rows: 
         connection.close()
-        print(results)
+        print("Results from Database: ", results)
         return results
     else:
         ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
