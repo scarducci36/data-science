@@ -62,7 +62,12 @@ def save_search(data):
 
                 if existing: 
                     print(f"Album '{album['name']}' already exists, skipping insert into DB")
-
+                    print("Album ", j)
+                    j = j+1
+                    print("Album Name: ", album['name'])
+                    print("Album Popularity: ", album['popularity'])
+                    print("Genres: ", album['genres'])
+                    print("\n")
                 else: 
 
                     c.execute("INSERT INTO albums (spotify_id, album_name, popularity, image_url, genres, artist_spotify_id, last_updated) VALUES (?, ?, ?, ?, ?, ?)", 
