@@ -7,6 +7,7 @@ body{
     color: purple; 
     text-align: center;
     background: black;
+    
 }
 
 .h1 {
@@ -39,4 +40,12 @@ form button {
     border-radius: 5px; /* Rounded corners */
     cursor: pointer; /* Change cursor to pointer on hover */
     font-size: 16px; 
+}
+
+li{
+    color: white
+
+}
+h3 {
+    color: white
 }

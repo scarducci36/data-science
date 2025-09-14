@@ -40,8 +40,8 @@ def save_search(data):
                 print(f"Artist '{artist['name']}' already exists, skipping insert into DB")
 
             else: 
-                c.execute("INSERT INTO artists (artist_name, genres, followers, popularity, spotify_id, last_updated) VALUES (?, ?, ?, ?, ?, ?)", 
-                        (artist['name'], ", ".join(artist['genres']), artist['followers']['total'], artist['popularity'], artist['id'], search_time))
+                c.execute("INSERT INTO artists (artist_name, genres, followers, popularity, spotify_id, image_url last_updated) VALUES (?, ?, ?, ?, ?, ?, ?)", 
+                        (artist['name'], ", ".join(artist['genres']), artist['followers']['total'], artist['popularity'], artist['id'], artist['images'][0]['url'], search_time))
                 print("Artist ", i)
                 i = i + 1
                 print("Name: ", artist["name"])
@@ -66,7 +66,7 @@ def save_search(data):
                 else: 
 
                     c.execute("INSERT INTO albums (spotify_id, album_name, popularity, image_url, genres, last_updated) VALUES (?, ?, ?, ?, ?, ?)", 
-                            (album['name'], album['id'], album['popularity'], album['images']['url'], album['genres'], search_time))
+                            (album['name'], album['id'], album['popularity'], album['images'][0]['url'], album['genres'], search_time))
                     c.execute("")
                     print("Album ", j)
                     j = j+1
@@ -173,10 +173,12 @@ def query_db(text):
     search_term = f"%{text.lower()}%"
     c.execute(SQL, (search_term, search_term, search_term))
     rows = c.fetchall()
+    results = [dict(row) for row in rows]
 
     if rows: 
         connection.close()
-        return rows
+        print(results)
+        return results
     else:
         ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
         #Set up HTTP call requirements
@@ -190,11 +192,16 @@ def query_db(text):
         #response_album = search_request_album(url_album, headers, params_album)
 
         if response.status_code == 200:
-
+            results = []
             data = response.json()
             #print(json.dumps(data, indent=2))
             save_search(data)
             get_searches()
+            for artist in data['artists']['items']:
+                results.append({
+                    "artist_name": artist['name'], "image_url": artist['images'][0]['url'] if artist['images'] else ''
+                })
+            return data
                 
         else:
             print("Error: Attempting to Refresh Access Token...", response.status_code, response.text)
@@ -269,7 +276,7 @@ def search():
         results = query_db(query)
 
 
-    return render_template('search_results.html', query=query, results=results)
+    return render_template('search_results.html', query=query, artists=results)
 
 if __name__ == '__main__':
     app.run(debug=True)
