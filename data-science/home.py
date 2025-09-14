@@ -38,6 +38,13 @@ def save_search(data):
 
             if existing: 
                 print(f"Artist '{artist['name']}' already exists, skipping insert into DB")
+                print("Artist ", i)
+                i = i + 1
+                print("Name: ", artist["name"])
+                print("ID: ", artist["id"])
+                print("Popularity: ", artist['popularity'])
+                print("Followers: ", artist['followers']['total'])
+                print("\n")
 
             else: 
                 c.execute("INSERT INTO artists (artist_name, genres, followers, popularity, spotify_id, image_url, last_updated) VALUES (?, ?, ?, ?, ?, ?, ?)", 
