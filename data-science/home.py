@@ -40,7 +40,7 @@ def save_search(data):
                 print(f"Artist '{artist['name']}' already exists, skipping insert into DB")
 
             else: 
-                c.execute("INSERT INTO artists (artist_name, genres, followers, popularity, spotify_id, image_url last_updated) VALUES (?, ?, ?, ?, ?, ?, ?)", 
+                c.execute("INSERT INTO artists (artist_name, genres, followers, popularity, spotify_id, image_url, last_updated) VALUES (?, ?, ?, ?, ?, ?, ?)", 
                         (artist['name'], ", ".join(artist['genres']), artist['followers']['total'], artist['popularity'], artist['id'], artist['images'][0]['url'], search_time))
                 print("Artist ", i)
                 i = i + 1
@@ -65,8 +65,9 @@ def save_search(data):
 
                 else: 
 
-                    c.execute("INSERT INTO albums (spotify_id, album_name, popularity, image_url, genres, last_updated) VALUES (?, ?, ?, ?, ?, ?)", 
-                            (album['name'], album['id'], album['popularity'], album['images'][0]['url'], album['genres'], search_time))
+                    c.execute("INSERT INTO albums (spotify_id, album_name, popularity, image_url, genres, artist_spotify_id, last_updated) VALUES (?, ?, ?, ?, ?, ?)", 
+                            (album['name'], album['id'], album['popularity'], album['images'][0]['url'], album['genres'], album['artists'][0]['id'], search_time))
+                    
                     c.execute("")
                     print("Album ", j)
                     j = j+1
@@ -201,7 +202,7 @@ def query_db(text):
                 results.append({
                     "artist_name": artist['name'], "image_url": artist['images'][0]['url'] if artist['images'] else ''
                 })
-            return data
+            return results
                 
         else:
             print("Error: Attempting to Refresh Access Token...", response.status_code, response.text)
