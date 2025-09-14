@@ -33,14 +33,14 @@ def save_search(data):
     if "artists" in data:
         for artist in data['artists']['items']:
             spotify_id = artist['id']
-            c.execute('''SELECT id FROM searches WHERE spotify_id = ?''', (spotify_id, ))
+            c.execute('''SELECT id FROM artists WHERE spotify_id = ?''', (spotify_id, ))
             existing = c.fetchone()
 
             if existing: 
                 print(f"Artist '{artist['name']}' already exists, skipping insert into DB")
 
             else: 
-                c.execute("INSERT INTO searches (artist_name, genres, followers, popularity, spotify_id, search_time) VALUES (?, ?, ?, ?, ?, ?)", 
+                c.execute("INSERT INTO artists (artist_name, genres, followers, popularity, spotify_id, search_time) VALUES (?, ?, ?, ?, ?, ?)", 
                         (artist['name'], artist['genres'], artist['followers']['total'], artist['popularity'], artist['id'], search_time))
                 print("Artist ", i)
                 i = i + 1
