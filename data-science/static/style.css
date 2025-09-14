@@ -17,6 +17,7 @@ body{
     font-size: large;
     text-align: center;
     background-color: red;
+    margin: 20px;
 }
 
 form{
@@ -52,5 +53,5 @@ h3 {
 }
 
 .results {
-    margin: 20px;
+    margin: 35px;
 }
