@@ -41,7 +41,7 @@ def save_search(data):
 
             else: 
                 c.execute("INSERT INTO searches (artist_name, genres, followers, popularity, spotify_id, search_time) VALUES (?, ?, ?, ?, ?, ?)", 
-                        (artist['name'], artist['genres'], artist['followers']['total'], artist['popularity'], artist['spotify_id'], search_time))
+                        (artist['name'], artist['genres'], artist['followers']['total'], artist['popularity'], artist['id'], search_time))
                 print("Artist ", i)
                 i = i + 1
                 print("Name: ", artist["name"])
