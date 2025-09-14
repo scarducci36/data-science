@@ -9,7 +9,7 @@
     <body>
         <h1>Search Results</h1>
         <ul>
-            {%for artist in artists%}
+            {%for artist in results%}
             <li>
                 <h3>{{artist.artist_name}}</h3>
                 <img src="{{artist.image_url}}" alt="{{artist.artist_name}}" width="150"/>
