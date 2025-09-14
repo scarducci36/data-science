@@ -40,8 +40,8 @@ def save_search(data):
                 print(f"Artist '{artist['name']}' already exists, skipping insert into DB")
 
             else: 
-                c.execute("INSERT INTO artists (artist_name, genres, followers, popularity, spotify_id, search_time) VALUES (?, ?, ?, ?, ?, ?)", 
-                        (artist['name'], artist['genres'], artist['followers']['total'], artist['popularity'], artist['id'], artist['last_updated']))
+                c.execute("INSERT INTO artists (artist_name, genres, followers, popularity, spotify_id, last_updated) VALUES (?, ?, ?, ?, ?, ?)", 
+                        (artist['name'], artist['genres'], artist['followers']['total'], artist['popularity'], artist['id'], search_time))
                 print("Artist ", i)
                 i = i + 1
                 print("Name: ", artist["name"])
