@@ -1,4 +1,5 @@
 import React, {useState} from "react"
+import ArtistCard from "./ArtistCard"
 
  // Creating the SearchBar component
 function SearchBar(){
@@ -11,7 +12,7 @@ function SearchBar(){
         const data = await response.json(); 
         setResults(data); 
     };    
-}
+
 
 //Returning HTML components that correspond to functionality just described above
 return (
@@ -27,4 +28,8 @@ return (
             ))}
         </ul>
     </div>
-)
+); 
+
+}
+
+export default SearchBar; 
